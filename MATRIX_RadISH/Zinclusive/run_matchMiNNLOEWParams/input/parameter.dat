@@ -5,7 +5,7 @@
 #----------------------\
 # general run settings |
 #----------------------/
-process_class   =  pp-emve~+X  #  process id
+process_class   =  pp-emep+X   #  process id
 E               =  6500.       #  energy per beam
 coll_choice     =  1           #  (1) PP collider; (2) PPbar collider
 
@@ -13,9 +13,9 @@ coll_choice     =  1           #  (1) PP collider; (2) PPbar collider
 #----------------\
 # scale settings |
 #----------------/
-scale_ren       =  80.385      #  renormalization (muR) scale
-scale_fact      =  80.385      #  factorization (muF) scale
-dynamic_scale   =  1           #  dynamic ren./fac. scale
+scale_ren       =  91.1876     #  renormalization (muR) scale
+scale_fact      =  91.1876     #  factorization (muF) scale
+dynamic_scale   =  1           #  dynamic ren./fac. scale 
                                #  0: fixed scale above
                                #  1: invariant mass (Q) of system (of the colourless final states)
                                #  2: transverse mass (mT^2=Q^2+pT^2) of system (of the colourless final states)
@@ -24,7 +24,7 @@ scale_variation  = 1           #  switch for muR/muF uncertainties (0) off; (1) 
 variation_factor = 2           #  symmetric variation factor; usually a factor of 2 up and down (default)
 
 # scale settings for resummation
-scale_res         =  80.385    #  resummation scale
+scale_res         =  91.1876   #  resummation scale
 dynamic_scale_res =  1         #  dynamic resummation scale
                                #  0: fixed scale above
                                #  1: invariant mass (Q) of system (of the colourless final states)
@@ -37,13 +37,13 @@ variation_factor_res = 2       #  symmetric variation factor; usually a factor o
 # order-dependent run settings |
 #------------------------------/
 # LO
-run_LO          =  1           #  switch for LO cross section (1) on; (0) off
+run_LO          =  0           #  switch for LO cross section (1) on; (0) off
 LHAPDF_LO       =  NNPDF31_lo_as_0118 #  LO LHAPDF set
 PDFsubset_LO    =  0           #  member of LO PDF set
 precision_LO    =  1.e-2       #  precision of LO cross section
 
 # NLO(+NLL)
-run_NLO         =  1           #  switch for NLO cross section (1) on; (0) off
+run_NLO         =  0           #  switch for NLO cross section (1) on; (0) off
 add_RadISH_NLL  =  0           #  switch to add NLL RadISH resummation to NLO (1) on; (0) off
 LHAPDF_NLO      =  NNPDF31_nlo_as_0118 #  NLO LHAPDF set
 PDFsubset_NLO   =  0           #  member of NLO PDF set
@@ -57,6 +57,8 @@ add_RadISH_N3LL =  1           #  switch to add N3LL RadISH resummation to NNLO 
 LHAPDF_NNLO     =  NNPDF31_nnlo_as_0118 #  NNLO LHAPDF set
 PDFsubset_NNLO  =  0           #  member of NNLO PDF set
 precision_NNLO  =  1.e-3       #  precision of NNLO cross section
+
+switch_qT_accuracy = 1         #  switch to improve qT-subtraction accuracy (slower numerical convergence)
 
 
 #--------------------------\
@@ -105,16 +107,20 @@ min_born_events_radish = 4000  #  minimal number of Born events used in each par
 RadISH_pTsystem_veto = 1.e99   #  veto on transverse momentum of system (used only for RadISH_observable = 5)
 
 
+
 #----------------------------\
 # Settings for fiducial cuts |
 #----------------------------/
-user_switch M_leplep = 1       #  switch to turn on (1) and off (0) cuts on lepton-lepton invariant mass
-user_cut min_M_leplep = 10.    #  requirement on lepton-lepton invariant mass (lower cut)
-
 # Jet algorithm
 jet_algorithm = 3              #  (1) Cambridge-Aachen (2) kT (3) anti-kT
 jet_R_definition = 0           #  (0) pseudo-rapidity (1) rapidity
 jet_R = 0.4                    #  DeltaR
+
+# Photon recombination (lepton dressing)
+photon_recombination = 1       #  switch for photon recombination (1) on; (0) off; must be on for EW runs
+photon_R_definition = 0        #  (0) pseudorap; (1) rapidity
+photon_R = 0.1                 #  DeltaR: photon combined with charged particle when inside this radius
+photon_E_threshold_ratio = 1.  #  identify jet as photon: jet is photon, if photon-energy > ratio*jet-energy
 
 # Jet cuts
 define_pT jet = 30.            #  requirement on jet transverse momentum (lower cut)
@@ -125,24 +131,45 @@ n_observed_max jet = 99        #  maximal number of observed jets (with cuts abo
 
 # Lepton cuts
 define_pT lep = 0.            #  requirement on lepton transverse momentum (lower cut)
-define_eta lep = 1e99          #  requirement on lepton pseudo-rapidity (upper cut)
+define_eta lep = 1.e99          #  requirement on lepton pseudo-rapidity (upper cut)
 define_y lep = 1.e99           #  requirement on lepton rapidity (upper cut)
-n_observed_min lep = 1         #  minimal number of observed leptons (with cuts above)
+n_observed_min lep = 2         #  minimal number of observed leptons (with cuts above)
 n_observed_max lep = 99        #  maximal number of observed leptons (with cuts above)
 
-# Neutrino cuts
-define_pT missing = 0.        #  requirement on transverse momentum of sum of all neutrinos (lower cut)
+# Negatively-charged lepton cuts
+define_pT lm = 0.              #  requirement on negatively-charged lepton transverse momentum (lower cut)
+define_eta lm = 1.e99          #  requirement on negatively-charged lepton pseudo-rapidity (upper cut)
+define_y lm = 1.e99            #  requirement on negatively-charged lepton rapidity (upper cut)
+n_observed_min lm = 0          #  minimal number of observed negatively-charged leptons (with cuts above)
+n_observed_max lm = 99         #  maximal number of observed negatively-charged leptons (with cuts above)
+
+# Positively-charged lepton cuts
+define_pT lp = 0.              #  requirement on positively-charged lepton transverse momentum (lower cut)
+define_eta lp = 1.e99          #  requirement on positively-charged lepton pseudo-rapidity (upper cut)
+define_y lp = 1.e99            #  requirement on positively-charged lepton rapidity (upper cut)
+n_observed_min lp = 0          #  minimal number of observed positively-charged leptons (with cuts above)
+n_observed_max lp = 99         #  maximal number of observed positively-charged leptons (with cuts above)
 
 ####################
 # User-defined cuts
 # (only used if defined in 'MATRIX/prc/$process/user/specify.cuts.cxx')
 #
-# no user-defined cuts implemented at the moment for this process
+user_switch M_leplep = 1       #  switch to turn on (1) and off (0) cuts on lepton-lepton invariant mass
+user_cut min_M_leplep = 50.    #  requirement on lepton-lepton invariant mass (lower cut)
+user_cut max_M_leplep = 1.e99   #  requirement on lepton-lepton invariant mass (upper cut)
+
+user_switch R_leplep = 0       #  switch to turn on (1) and off (0) cuts on lepton-lepton separation
+user_cut min_R_leplep = 0.     #  requirement on lepton-lepton separation in y-phi-plane (lower cut)
+
+user_switch lepton_cuts = 0    #  switch to turn on (1) and off (0) cuts on transverse momentum of leptons
+user_cut min_pT_lep_1st = 25.  #  requirement on hardest lepton transverse momentum (lower cut)
+user_cut min_pT_lep_2nd = 15.  #  requirement on second-hardest lepton transverse momentum (lower cut)
+
 
 #-----------------\
 # MATRIX behavior |
 #-----------------/
-max_time_per_job = 48         #  very rough time(hours) one main run job shall take (default: 24h)
+max_time_per_job = 12          #  very rough time(hours) one main run job shall take (default: 24h)
                                #  unreliable when < 1h, use as tuning parameter for degree of parallelization
                                #  note: becomes ineffective when job number > max_nr_parallel_jobs
                                #        which is set in MATRIX_configuration file
@@ -153,5 +180,5 @@ save_previous_log = 0          #  switch to save previous log of this run (in lo
                                #  crucial to set to 0 if re-running main with different inputs (apart from precision)
                                #  note: if missing (default) pre runs used if important for precision
                                #  (separately for each contribution)
-reduce_workload = 2            #  switch to keep full job output (0), reduce (1) or minimize (2) workload on slow clusters
+reduce_workload = 0            #  switch to keep full job output (0), reduce (1) or minimize (2) workload on slow clusters
 random_seed = 0                #  specify integer value (grid-/pre-run reproducible)

@@ -18,15 +18,15 @@ Block MASS
  14 0.000000     # M_vm
  15 1.777000e+00 # M_tau
  16 0.000000     # M_vt
- 23 9.1153509740726733e+01 # M_Z 
- 24 8.0351812293789408e+01 # M_W
+ 23 9.115348061918276e+01 # M_Z 
+ 24 7.9906828021009360e+01 # M_W
  25 1.250000e+02 # M_H 
 
 #-------------------\
 # inputs for the SM |
 #-------------------/
 Block SMINPUTS
-  1 1.3230648214177197e+02 # 1/alpha_e(MZ)
+  1 1.2882539822180297e+02 # 1/alpha_e(MZ)
   2 1.1663787e-05 # G_F 
 111 1.370360e+02 # 1/alpha_e(mu->0)
 
@@ -42,8 +42,8 @@ Block SMINPUTS
 # decays widths |
 #---------------/
 DECAY  6 1.442620e+00 # WT 
-DECAY 23 2.4932018986110700e+00 # WZ 
-DECAY 24 2.0904310808144846e+00 # WW 
+DECAY 23 2.4942663787728243e+00 # WZ 
+DECAY 24 2.085e+00 # WW 
 DECAY 25 4.070000e-03 # WH
 
 #-----------\
@@ -59,26 +59,3 @@ Block EWINPUTS
        # 1: on
        # 2: on, but alpha_e is determined through real parameters
 
-
-# NOTE: You can use EITHER Block CKM (full CKM) OR Block VCKMIN (1./2. generation mixing with Cabibbo angle).
-#       The other one must be removed/commented. If you remove/comment both blocks a trivial CKM (no mixing) is used.
-
-#------------\
-# CKM matrix |
-#------------/
-Block CKM
- 11 0.974460e+00 # V_ud
- 12 0.2243800e+00 # V_us
- 13 0.008960e+00 # V_ub
- 21 0.22452e+00 # V_cd
- 22 0.97359e+00 # V_cs
- 23 0.04133e+00 # V_cb
- 31 0.00365e+00 # V_td
- 32 0.04214e+00 # V_ts
- 33 0.999105e+00 # V_tb
-
-#---------------\
-# Cabibbo angle |
-#---------------/
-#Block VCKMIN
-#  1 0.227000e+00 # Cabibbo angle

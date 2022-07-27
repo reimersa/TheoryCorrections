@@ -14,7 +14,6 @@
 #----------------------\
 # define distributions |
 #----------------------/
-# distribution in the observable resummed by RadISH, required in RadISH runs
 distributionname  =  RadISH_observable_binning1
 distributiontype  =  RadISH_observable
 binningtype       =  irregular
@@ -27,48 +26,112 @@ startpoint        =  0.
 endpoint          =  120.
 binnumber         =  120
 
-# transverse momentum of lepton regularly binned in 200 bins from 0-1000 GeV (ie, 5 GeV bins)
-distributionname  =  pT_lep
+distributionname  =  RadISH_observable_cmsbinning
+distributiontype  =  RadISH_observable
+binningtype       =  irregular
+edges             =  0.0:1.0:2.0:3.0:4.0:5.0:6.0:7.0:8.0:9.0:10.0:11.0:12.0:13.0:14.0:16.0:18.0:20.0:22.0:25.0:28.0:32.0:37.0:43.0:52.0:65.0:85.0:120.0:160.0:190.0:220.0:250.0:300.0:400.0:500.0:800.0:1500.0
+
+# check of same distribution defined directly via pT of Z (not resummed)
+# transverse momentum of the Z boson regularly binned in 200 bins from 0-1000 GeV (ie, 5 GeV bins)
+distributionname  =  pT_Z_cmsbinning
 distributiontype  =  pT
 particle 1        =  lep 1
-startpoint        =  0.
-endpoint          =  120.
-binwidth          =  1
+particle 1        =  lep 2
+binningtype       =  irregular
+edges             =  0.0:1.0:2.0:3.0:4.0:5.0:6.0:7.0:8.0:9.0:10.0:11.0:12.0:13.0:14.0:16.0:18.0:20.0:22.0:25.0:28.0:32.0:37.0:43.0:52.0:65.0:85.0:120.0:160.0:190.0:220.0:250.0:300.0:400.0:500.0:800.0:1500.0
 
-# transverse momentum of neutrino regularly binned from 0-1000 GeV in 5 GeV steps
-distributionname  =  pT_nu
-distributiontype  =  pT
-particle 1        =  nua 1
-startpoint        =  0.
-endpoint          =  120.
-binwidth          =  1. 
-
-# transverse momentum of W boson (electon+neutrino) binned from 0-1000 GeV in 10 GeV steps
-distributionname  =  pT_W
-distributiontype  =  pT
-particle 1        =  lep 1
-particle 1        =  nua 1
-startpoint        =  0.
-endpoint          =  120.
-binwidth          =  1.
-
-# transverse momentum of W boson (electon+neutrino) binned from 0-1000 GeV in 10 GeV steps
-distributionname  =  yW
+distributionname  =  yZ
 distributiontype  =  y
 particle 1        =  lep 1
-particle 1        =  nua 1
+particle 1        =  lep 2
 startpoint        =  -5.
 endpoint          =  5.
-binwidth          =  0.05.
+binwidth          =  0.1.
 
-# invariant mass of W boson (electon+neutrino) binned irregulary 
-distributionname  =  m_W
+distributionname  =  yZ_binning2
+distributiontype  =  y
+particle 1        =  lep 1
+particle 1        =  lep 2
+startpoint        =  -5.
+endpoint          =  5.
+binwidth          =  0.4.
+
+
+# transverse momentum of hardest lepton regularly binned in 200 bins from 0-1000 GeV (ie, 5 GeV bins)
+distributionname  =  eta_lep1
+distributiontype  =  eta
+particle 1        =  lep 1
+startpoint        =  -5
+endpoint          =  5
+binwidth          =  0.5
+
+# transverse momentum of hardest lepton regularly binned in 200 bins from 0-1000 GeV (ie, 5 GeV bins)
+distributionname  =  eta_lep2
+distributiontype  =  eta
+particle 1        =  lep 2
+startpoint        =  -5
+endpoint          =  5
+binwidth          =  0.5
+
+# transverse momentum of hardest lepton regularly binned in 200 bins from 0-1000 GeV (ie, 5 GeV bins)
+distributionname  =  pT_lep1
+distributiontype  =  pT
+particle 1        =  lep 1
+startpoint        =  0.
+endpoint          =  120
+binwidth          =  2. 
+
+# transverse momentum of second-hardest lepton regularly binned from 0-1000 GeV in 5 GeV steps
+distributionname  =  pT_lep2
+distributiontype  =  pT
+particle 1        =  lep 2
+startpoint        =  0.
+endpoint          =  100.
+binwidth          =  2. 
+
+# transverse momentum of hardest electron regularly binned from 0-1000 GeV in 5 GeV steps
+distributionname  =  pT_em1
+distributiontype  =  pT
+particle 1        =  em 1
+startpoint        =  0.
+endpoint          =  200.
+binwidth          =  5. 
+
+# transverse momentum of hardest positron regularly binned from 0-1000 GeV in 5 GeV steps
+distributionname  =  pT_ep1
+distributiontype  =  pT
+particle 1        =  ep 1
+startpoint        =  0.
+endpoint          =  200.
+binwidth          =  5. 
+
+# transverse momentum of sum of hardest and second-hardest lepton from 0-1000 GeV in 10 GeV steps
+distributionname  =  pT_lep1_lep2
+distributiontype  =  pT
+particle 1        =  lep 1
+particle 1        =  lep 2
+startpoint        =  0.
+endpoint          =  150.
+binwidth          =  1.
+
+# invariant mass of sum of hardest and second-hardest lepton from 0-1000 GeV in 10 GeV steps
+distributionname  =  m_lep1_lep2
 distributiontype  =  m
 particle 1        =  lep 1
-particle 1        =  nua 1
-startpoint        =  70.
-endpoint          =  90.
-binwidth          =  0.5.
+particle 1        =  lep 2
+startpoint        =  80.
+endpoint          =  140.
+binwidth          =  1.
+
+# distance (in y-phi-plane) between hardest electron and positron binned from 0-10 in 0.1 steps
+distributionname  =  dR_em1_ep1
+distributiontype  =  dR
+particle 1        =  em 1
+particle 2        =  ep 1
+startpoint        =  0.
+endpoint          =  10.
+binwidth          =  0.1
+
 
 
 #--------\
